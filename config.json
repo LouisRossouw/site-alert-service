@@ -1,6 +1,6 @@
 {
-      "name": "Stock Alert",
-      "slug": "stock-alert",
+      "name": "Site Alert",
+      "slug": "site-alert",
       "host": "0.0.0.0",
       "port": 5003,
       "timeout": 15,
