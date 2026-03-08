@@ -1,4 +1,4 @@
-# Site Alert Service
+# Site Alert Service - wip
 
 Watches websites for changes, i.e. new products.
 
