@@ -13,7 +13,6 @@ class Settings():
         self.tasks = read_json(self.tasks_path)
 
         self.name = self.config.get("name")
-        self.icon = self.config.get("icon")
         self.host = self.config.get("host")
         self.port = self.config.get("port")
 
@@ -44,7 +43,6 @@ class Settings():
         return read_json(self.tasks_path)
 
     def update_tasks(self, data):
-        print('>>>', data)
         return write_to_json(self.tasks_path, data)
 
     def reload(self):
@@ -52,7 +50,6 @@ class Settings():
         self.tasks = read_json(self.tasks_path)
 
         self.name = self.config.get("name")
-        self.icon = self.config.get("icon")
         self.host = self.config.get("host")
         self.port = self.config.get("port")
 
