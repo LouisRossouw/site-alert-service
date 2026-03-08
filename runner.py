@@ -5,7 +5,7 @@ from lxml import html
 from datetime import datetime
 from logging.handlers import RotatingFileHandler
 
-from utils import read_json, write_to_json
+from utils import read_json, write_to_json, is_internet_available
 
 
 this_dir = os.path.dirname(__file__)
@@ -84,6 +84,11 @@ def format_alert(data):
 
 
 def run(settings, web_task):
+
+    if not is_internet_available():
+        logging.info("No internet connection..")
+        return
+
     results_path = os.path.join(this_dir, 'results.json')
 
     results_exists = os.path.exists(results_path)
