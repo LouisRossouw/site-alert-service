@@ -1,0 +1,14 @@
+[
+      {
+            "datetime": "08-03-2026 21:22",
+            "timestamp": 1772997768.332467,
+            "result": "https://soundslimited.co.za/product/hot-wheels-premium-car-culture-nissan-gt-r-2-pack-jbl05/",
+            "matched_string": "hot-wheel",
+            "route": "",
+            "contains": "product",
+            "get_element_type": "href",
+            "strings_to_match": [
+                  "hot-wheel"
+            ]
+      }
+]

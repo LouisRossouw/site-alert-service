@@ -1,0 +1,63 @@
+import os
+from utils import read_json, write_to_json
+
+
+class Settings():
+    def __init__(self):
+        self.root_path = os.path.dirname(__file__)
+
+        self.config_path = os.path.join(self.root_path, "config.json")  # nopep8
+        self.tasks_path = os.path.join(self.root_path, "tasks.json")  # nopep8
+
+        self.config = read_json(self.config_path)
+        self.tasks = read_json(self.tasks_path)
+
+        self.name = self.config.get("name")
+        self.icon = self.config.get("icon")
+        self.host = self.config.get("host")
+        self.port = self.config.get("port")
+
+        self.log_file = self.config.get("log_file")
+
+        self.notify_bot = self.config.get("notify_bot")
+        self.notifications = self.config.get("notifications")
+        self.tele_jam_api_baseurl = self.config.get("tele_jam_api_baseurl")
+
+    def get_logs(self, lines=20):
+        if not os.path.exists(self.log_file):
+            return "No logs yet."
+
+        with open(self.log_file, "r") as f:
+            return "".join(f.readlines()[-lines:])
+
+    def get_config(self):
+        return read_json(self.config_path)
+
+    def update_config(self, data):
+        write_to_json(self.config_path, data)
+        return self.reload()
+
+    def get_setting(self, key):
+        return read_json(self.config_path).get(key)
+
+    def get_tasks(self):
+        return read_json(self.tasks_path)
+
+    def update_tasks(self, data):
+        print('>>>', data)
+        return write_to_json(self.tasks_path, data)
+
+    def reload(self):
+        self.config = read_json(self.config_path)
+        self.tasks = read_json(self.tasks_path)
+
+        self.name = self.config.get("name")
+        self.icon = self.config.get("icon")
+        self.host = self.config.get("host")
+        self.port = self.config.get("port")
+
+        self.log_file = self.config.get("log_file")
+
+        self.notify_bot = self.config.get("notify_bot")
+        self.notifications = self.config.get("notifications")
+        self.tele_jam_api_baseurl = self.config.get("tele_jam_api_baseurl")
