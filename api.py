@@ -17,6 +17,10 @@ class CheckWebAPI:
         self._routes()
 
     def _routes(self):
+        @self.app.get("/")
+        def root():
+            return {"info": f"{self.settings.name}"}
+
         @self.app.get("/health")
         def health():
             return {"ok": True}
