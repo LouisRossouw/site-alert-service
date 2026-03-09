@@ -2,15 +2,15 @@
     {
         "name": "Sounds Limited",
         "slug": "sounds-limited",
-        "frequeny": "hour",
-        "interval": 1,
+        "frequeny": "second",
+        "interval": 5,
         "base_url":"https://soundslimited.co.za",
         "tasks": [
             {
                 "route": "",
                 "contains": "product",
                 "get_element_type": "href",
-                "strings_to_match": ["Mini GT", "minigt", "mini-gt"]
+                "strings_to_match": ["Mini GT", "minigt", "mini-gt", "pop race", "pop-race", "poprace", "hot-wheel"]
             }
         ]
     }

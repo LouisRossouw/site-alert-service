@@ -1,8 +1,7 @@
-from api import CheckWebAPI
-from settings import Settings
-from scheduler import TaskScheduler
-
-from runner import run
+from lib.settings import Settings
+from lib.api import CheckWebAPI
+from lib.scheduler import TaskScheduler
+from lib.runner import run
 
 settings = Settings()
 scheduler = TaskScheduler(settings, run)

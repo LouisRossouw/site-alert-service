@@ -1,13 +1,14 @@
 import os
-from utils import read_json, write_to_json
+from lib.utils import read_json, write_to_json
 
 
 class Settings():
     def __init__(self):
-        self.root_path = os.path.dirname(__file__)
+        self.root_path = os.path.dirname(os.path.dirname(__file__))
 
-        self.config_path = os.path.join(self.root_path, "config.json")  # nopep8
-        self.tasks_path = os.path.join(self.root_path, "tasks.json")  # nopep8
+        self.config_path = os.path.join(self.root_path, "configs", "config.json")  # nopep8
+        self.tasks_path = os.path.join(self.root_path, "configs", "tasks.json")  # nopep8
+        self.results_path = os.path.join(self.root_path, "data", "results.json")  # nopep8
 
         self.config = read_json(self.config_path)
         self.tasks = read_json(self.tasks_path)
@@ -16,7 +17,8 @@ class Settings():
         self.host = self.config.get("host")
         self.port = self.config.get("port")
 
-        self.log_file = self.config.get("log_file")
+        self.log_file = os.path.join(
+            self.root_path, "data", self.config.get("log_file"))
 
         self.notify_bot = self.config.get("notify_bot")
         self.notifications = self.config.get("notifications")
@@ -48,12 +50,14 @@ class Settings():
     def reload(self):
         self.config = read_json(self.config_path)
         self.tasks = read_json(self.tasks_path)
+        self.tasks = read_json(self.results_path)
 
         self.name = self.config.get("name")
         self.host = self.config.get("host")
         self.port = self.config.get("port")
 
-        self.log_file = self.config.get("log_file")
+        self.log_file = os.path.join(
+            self.root_path, "data", self.config.get("log_file"))
 
         self.notify_bot = self.config.get("notify_bot")
         self.notifications = self.config.get("notifications")
