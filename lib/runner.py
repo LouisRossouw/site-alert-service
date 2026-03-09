@@ -5,12 +5,13 @@ from lxml import html
 from datetime import datetime
 from logging.handlers import RotatingFileHandler
 
-from utils import read_json, write_to_json, is_internet_available
+from lib.utils import read_json, write_to_json, is_internet_available
 
 
 this_dir = os.path.dirname(__file__)
 
-handler = RotatingFileHandler("service.log", maxBytes=1_000_000, backupCount=3)
+handler = RotatingFileHandler(
+    "data/service.log", maxBytes=1_000_000, backupCount=3)
 
 logging.basicConfig(
     handlers=[handler],
@@ -50,7 +51,7 @@ def get_element(base_url, task):
         href = tree.xpath(f'//a[contains(@class,"{contains}")]')[0].get("href")
 
         for string in strings_to_match:
-            if string in href:
+            if str(string).lower() in str(href).lower():
                 return href, string
     return None, ''
 
@@ -89,7 +90,7 @@ def run(settings, web_task):
         logging.info("No internet connection..")
         return
 
-    results_path = os.path.join(this_dir, 'results.json')
+    results_path = os.path.join(this_dir, settings.results_path)
 
     results_exists = os.path.exists(results_path)
     last_results = [] if not results_exists else read_json(results_path)
@@ -119,7 +120,7 @@ def run(settings, web_task):
 
 
 if __name__ == "__main__":
-    from settings import Settings
+    from lib.settings import Settings
 
     settings = Settings()
     logging.info(f"{settings.name} has started..")
