@@ -25,7 +25,7 @@ Background schedulers will run based on the task.json:
                 "route": "", // https://www.site.com/some/route/here
                 "contains": "product", // search for product in the href
                 "get_element_type": "href",
-                "strings_to_match": ["Mini GT", "minigt", "mini-gt", "pop race", "pop-race", "poprace", "Pop Race"]
+                "strings_to_match": ["Mini GT", "minigt", "mini-gt", "pop race", "pop-race", "poprace", "Pop Race"] // key strings to try match
             }
         ]
     }
