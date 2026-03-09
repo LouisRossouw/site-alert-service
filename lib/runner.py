@@ -60,6 +60,9 @@ def check_if_diff(last_results, results):
     if len(results) <= 0:
         return []
 
+    if not last_results:
+        return results
+
     differences = []
 
     for i in range(len(last_results)):
@@ -112,6 +115,7 @@ def run(settings, web_task):
 
         # Alert the user via Telegram.
         if settings.notifications:
+            print("Sending allleert")
             url = f"{settings.tele_jam_api_baseurl}/notify/bots/{settings.notify_bot}"
             requests.post(url=url, json=payload)
 
