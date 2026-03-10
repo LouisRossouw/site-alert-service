@@ -131,7 +131,8 @@ def run(settings, web_task):
     manifest_path = os.path.join(settings.data_dir, manifest_name)
 
     data = {
-        "name": settings.name,
+        "system_name": settings.name,
+        "system_slug": settings.slug,
         "elapsed_time": elapsed_time,
         "timestamp": date_now.timestamp(),
         "datetime": date_now.strftime("%d-%m-%Y %H:%M")}

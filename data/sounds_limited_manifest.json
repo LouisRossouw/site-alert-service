@@ -1,8 +1,8 @@
 {
       "name": "Site Alert",
       "slug": "sounds-limited",
-      "frequeny": "second",
-      "interval": 5,
+      "frequeny": "hour",
+      "interval": 1,
       "base_url": "https://soundslimited.co.za",
       "tasks": [
             {
