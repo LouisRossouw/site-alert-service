@@ -1,4 +1,5 @@
 import json
+import time
 import requests
 
 
@@ -21,3 +22,13 @@ def is_internet_available():
     except requests.RequestException:
         pass
     return False
+
+
+def start_time():
+    """ Prints when an API is called. """
+    return time.time()
+
+
+def calculate_request_time(start_time):
+    """ Calculates the Database queries. """
+    return time.time() - start_time

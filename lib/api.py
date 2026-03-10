@@ -1,9 +1,15 @@
-from dotenv import load_dotenv
+import os
 
-from fastapi import FastAPI, Query, Body
 import uvicorn
+from dotenv import load_dotenv
+from fastapi import FastAPI, Query, Body
+
+from lib.utils import read_json
+
 
 load_dotenv()
+
+# TODO; Clean this up
 
 
 class CheckWebAPI:
@@ -14,6 +20,8 @@ class CheckWebAPI:
         self.settings = settings
         self.scheduler = scheduler
 
+        self.results_path = self.settings.results_path
+
         self._routes()
 
     def _routes(self):
@@ -23,7 +31,15 @@ class CheckWebAPI:
 
         @self.app.get("/health")
         def health():
-            return {"ok": True}
+            data_exists = os.path.exists(self.settings.service_path)
+            data = {} if not data_exists else read_json(
+                self.settings.service_path)
+            return {"ok": True, **data}
+
+        @self.app.get("/results")
+        def get_last_results():
+            results_exists = os.path.exists(self.results_path)
+            return [] if not results_exists else read_json(self.results_path)
 
         @self.app.get("/logs")
         def _get_logs(lines: int = 20):
