@@ -8,9 +8,22 @@
         "tasks": [
             {
                 "route": "",
-                "contains": "product",
-                "get_element_type": "href",
+                "xpath": "//a[contains(@class,'product')]/@href",
                 "strings_to_match": ["Mini GT", "minigt", "mini-gt", "pop race", "pop-race", "poprace", "Pop Race"]
+            }
+        ]
+    },
+        {
+        "name": "Mini GT",
+        "slug": "mini-gt",
+        "frequeny": "hour",
+        "interval": 1,
+        "base_url":"https://minigt.tsm-models.com",
+        "tasks": [
+            {
+                "route": "index.php?action=product-list&b_id=13&p=1",
+                "xpath": "//a[contains(@class,'font-weight-bold')]/text()",
+                "strings_to_match": []
             }
         ]
     }

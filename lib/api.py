@@ -20,8 +20,6 @@ class CheckWebAPI:
         self.settings = settings
         self.scheduler = scheduler
 
-        self.results_path = self.settings.results_path
-
         self._routes()
 
     def _routes(self):
@@ -38,8 +36,9 @@ class CheckWebAPI:
 
         @self.app.get("/results")
         def get_last_results():
-            results_exists = os.path.exists(self.results_path)
-            return [] if not results_exists else read_json(self.results_path)
+            # TODO; This will not work as results are saved individually for each task, i.e. sounds_limited_results.json
+            # results_exists = os.path.exists(self.results_path)
+            return []
 
         @self.app.get("/logs")
         def _get_logs(lines: int = 20):

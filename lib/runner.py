@@ -42,21 +42,49 @@ def get_tasks(web_task):
     return results
 
 
+# def get_element(base_url, task):
+#     """ Returns the found href matching """
+#     res = requests.get(f"{base_url}/{task.get('route')}")
+#     tree = html.fromstring(res.content)
+
+#     strings_to_match = task.get("strings_to_match")
+#     element_type = task.get("get_element_type")
+#     contains = task.get("contains")
+
+#     if element_type == "href":
+#         href = tree.xpath(f'//a[contains(@class,"{contains}")]')[0].get("href")
+
+#         for string in strings_to_match:
+#             if str(string).lower() in str(href).lower():
+#                 return href, string
+#     return None, ''
 def get_element(base_url, task):
-    """ Returns the found href matching """
-    res = requests.get(f"{base_url}/{task.get('route')}")
+    """Returns the first matching element"""
+
+    res = requests.get(f"{base_url}/{task.get('route')}", headers={
+        "User-Agent": "Mozilla/5.0"
+    })
+
     tree = html.fromstring(res.content)
 
-    strings_to_match = task.get("strings_to_match")
-    element_type = task.get("get_element_type")
-    contains = task.get("contains")
+    strings_to_match = task.get("strings_to_match", [])
+    xpath = task.get("xpath")
 
-    if element_type == "href":
-        href = tree.xpath(f'//a[contains(@class,"{contains}")]')[0].get("href")
+    elements = tree.xpath(xpath)
 
-        for string in strings_to_match:
-            if str(string).lower() in str(href).lower():
-                return href, string
+    if not elements:
+        return None, ''
+
+    href = elements[0] if isinstance(
+        elements[0], str) else elements[0].get("href")
+
+    if not strings_to_match:
+        return href, ''
+
+    for string in strings_to_match:
+        if string.lower() in href.lower():
+            return href.lower(), string
+
     return None, ''
 
 
@@ -84,11 +112,12 @@ def check_if_diff(last_results, results):
     return differences
 
 
-def format_alert(data):
+def format_alert(web_task, data):
     """ Formats the text for telegram. """
+
     return (
-        f"🌐 {data.get('name')} - {data.get('base_url')}\n\n"
-        f"🛒 New {data.get('matched_string')}\n\n"
+        f"🌐 {web_task['name']} - {web_task['base_url']}\n"
+        f"🛒 New {data.get('matched_string')}\n"
         f"🔗 {data.get('result')}\n\v"
     )
 
@@ -100,9 +129,11 @@ def run(settings, web_task):
         logging.info("No internet connection..")
         return
 
-    results_exists = os.path.exists(settings.results_path)
-    last_results = [] if not results_exists else read_json(
-        settings.results_path)
+    name = web_task['slug'].replace('-', '_')
+    results_path = os.path.join(settings.data_dir, f"{name}_results.json")
+
+    results_exists = os.path.exists(results_path)
+    last_results = [] if not results_exists else read_json(results_path)
 
     results = get_tasks(web_task)
     differences = check_if_diff(last_results, results)
@@ -113,7 +144,7 @@ def run(settings, web_task):
     formatted_txts = []
     if differences:
         for diff in differences:
-            formatted_txts.append(format_alert(diff))
+            formatted_txts.append(format_alert(web_task, diff))
 
         payload = [f"🏎️ {settings.name}:\n\n"]
         for f in formatted_txts:
@@ -127,8 +158,7 @@ def run(settings, web_task):
     elapsed_time = calculate_request_time(st)
 
     date_now = datetime.now()
-    manifest_name = f"{web_task['slug'].replace('-', '_')}_manifest.json"
-    manifest_path = os.path.join(settings.data_dir, manifest_name)
+    manifest_path = os.path.join(settings.data_dir, f"{name}_manifest.json")
 
     data = {
         "system_name": settings.name,
@@ -138,7 +168,7 @@ def run(settings, web_task):
         "datetime": date_now.strftime("%d-%m-%Y %H:%M")}
 
     # Update recorded results - this is to compare against future results.
-    write_to_json(settings.results_path, results)
+    write_to_json(results_path, results)
 
     # Manifest
     write_to_json(manifest_path, {

@@ -10,7 +10,6 @@ class Settings():
 
         self.config_path = os.path.join(self.configs_dir, "config.json")  # nopep8
         self.tasks_path = os.path.join(self.configs_dir, "tasks.json")  # nopep8
-        self.results_path = os.path.join(self.data_dir, "results.json")  # nopep8
 
         self.config = read_json(self.config_path)
         self.tasks = read_json(self.tasks_path)
@@ -55,7 +54,6 @@ class Settings():
     def reload(self):
         self.config = read_json(self.config_path)
         self.tasks = read_json(self.tasks_path)
-        self.results = read_json(self.results_path)
 
         self.name = self.config.get("name")
         self.slug = self.config.get("slug")
