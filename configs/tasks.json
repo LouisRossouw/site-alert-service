@@ -9,7 +9,7 @@
             {
                 "route": "",
                 "xpath": "//a[contains(@class,'product')]/@href",
-                "filters": ["Mini GT", "minigt", "mini-gt", "pop race", "pop-race", "poprace", "Pop Race"]
+                "filters": ["Mini GT", "minigt", "mini-gt", "pop race", "pop-race", "poprace"]
             }
         ]
     },
