@@ -2,7 +2,7 @@
     {
         "name": "Sounds Limited",
         "slug": "sounds-limited",
-        "frequeny": "second",
+        "frequeny": "hour",
         "interval": 1,
         "base_url":"https://soundslimited.co.za",
         "tasks": [
