@@ -27,7 +27,7 @@ def get_tasks(web_task):
         st = start_time()
         date_now = datetime.now()
 
-        result, string = get_element(web_task.get("base_url"), task)
+        result, filter = get_element(web_task.get("base_url"), task)
 
         if result:
             results.append({
@@ -35,29 +35,13 @@ def get_tasks(web_task):
                 "datetime": date_now.strftime("%d-%m-%Y %H:%M"),
                 "timestamp": date_now.timestamp(),
                 "result": result,
-                "matched_string": string,
+                "matched_string": filter,
                 **task
             })
 
     return results
 
 
-# def get_element(base_url, task):
-#     """ Returns the found href matching """
-#     res = requests.get(f"{base_url}/{task.get('route')}")
-#     tree = html.fromstring(res.content)
-
-#     strings_to_match = task.get("strings_to_match")
-#     element_type = task.get("get_element_type")
-#     contains = task.get("contains")
-
-#     if element_type == "href":
-#         href = tree.xpath(f'//a[contains(@class,"{contains}")]')[0].get("href")
-
-#         for string in strings_to_match:
-#             if str(string).lower() in str(href).lower():
-#                 return href, string
-#     return None, ''
 def get_element(base_url, task):
     """Returns the first matching element"""
 
@@ -67,7 +51,7 @@ def get_element(base_url, task):
 
     tree = html.fromstring(res.content)
 
-    strings_to_match = task.get("strings_to_match", [])
+    filters = task.get("filters", [])
     xpath = task.get("xpath")
 
     elements = tree.xpath(xpath)
@@ -78,12 +62,12 @@ def get_element(base_url, task):
     href = elements[0] if isinstance(
         elements[0], str) else elements[0].get("href")
 
-    if not strings_to_match:
+    if not filters:
         return href, ''
 
-    for string in strings_to_match:
-        if string.lower() in href.lower():
-            return href.lower(), string
+    for filter in filters:
+        if filter.lower() in href.lower():
+            return href.lower(), filter
 
     return None, ''
 

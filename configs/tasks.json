@@ -9,7 +9,7 @@
             {
                 "route": "",
                 "xpath": "//a[contains(@class,'product')]/@href",
-                "strings_to_match": ["Mini GT", "minigt", "mini-gt", "pop race", "pop-race", "poprace", "Pop Race"]
+                "filters": ["Mini GT", "minigt", "mini-gt", "pop race", "pop-race", "poprace", "Pop Race"]
             }
         ]
     },
@@ -23,7 +23,7 @@
             {
                 "route": "index.php?action=product-list&b_id=13&p=1",
                 "xpath": "//a[contains(@class,'font-weight-bold')]/text()",
-                "strings_to_match": []
+                "filters": []
             }
         ]
     }
