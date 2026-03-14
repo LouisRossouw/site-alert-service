@@ -1,0 +1,12 @@
+services:
+  site-alert-service:
+    build: .
+    image: site-alert-service
+    volumes:
+      - ./data:/app/data
+      - ./configs:/app/configs
+    restart: unless-stopped
+    ports:
+      - "5003:5003"
+      # environment:
+      #   - ENV_VAR=your_value

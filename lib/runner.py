@@ -20,7 +20,8 @@ logging.basicConfig(
 
 
 def get_tasks(web_task):
-    """ Returns the task """
+    """ Returns the task. """
+
     results = []
     for task in web_task.get("tasks"):
 
@@ -43,7 +44,7 @@ def get_tasks(web_task):
 
 
 def get_element(base_url, task):
-    """Returns the first matching element"""
+    """ Returns the first matching element. """
 
     res = requests.get(f"{base_url}/{task.get('route')}", headers={
         "User-Agent": "Mozilla/5.0"
@@ -74,6 +75,7 @@ def get_element(base_url, task):
 
 def check_if_diff(last_results, results):
     """ Compares prev and curr results to detect if new stock. """
+
     if len(results) <= 0:
         return []
 
