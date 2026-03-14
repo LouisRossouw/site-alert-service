@@ -11,6 +11,10 @@ To Run:
 2. `pip install -r requirements.txt`
 3. run `python main.py` and an API will be available.
 
+OR
+
+1. Docker: docker compose up -d --build
+
 Background schedulers will run based on the task.json:
 
 ```
