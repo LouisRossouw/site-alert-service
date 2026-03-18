@@ -26,5 +26,19 @@
                 "filters": []
             }
         ]
+    },
+        {
+        "name": "Model Car Company",
+        "slug": "model-car-company",
+        "frequeny": "hour",
+        "interval": 1,
+        "base_url":"https://themodelcarcompany.co.za/",
+        "tasks": [
+            {
+                "route": "",
+                "xpath": "//a[contains(@class,'full-unstyled-link')]/@href",
+                "filters": ["Mini GT", "mini-gt", "Pop Race", "pop-race"]
+            }
+        ]
     }
 ]
